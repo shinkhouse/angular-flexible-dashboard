@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+gridster .gridster-column,
+gridster .gridster-row {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+$theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$azure-palette,
+        ),
+        density: (
+            scale: -1,
+        ),
+    )
+);
+
+html {
+    @include mat.all-component-themes($theme);
+    @include mat.core-theme($theme);
+    @include mat.typography-hierarchy($theme);
+}
