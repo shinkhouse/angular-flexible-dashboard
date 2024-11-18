@@ -1,0 +1,6 @@
+<div class="metrics-container">
+    <div class="metric" *ngFor="let metric of metrics">
+        <div class="metric-name">{{ convertToTitleCase(metric.name) }}</div>
+        <div class="metric-value">{{ metric.value || 0 | number }}</div>
+    </div>
+</div>
