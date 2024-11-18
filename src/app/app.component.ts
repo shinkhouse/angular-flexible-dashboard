@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MetricsComponent } from './metrics/metrics.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 interface DashboardWidget extends GridsterItem {
     id: string;
@@ -37,6 +38,7 @@ interface DashboardWidget extends GridsterItem {
         MetricsComponent,
         MatButtonModule,
         MatCardModule,
+        MatIconModule
     ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
@@ -44,7 +46,7 @@ interface DashboardWidget extends GridsterItem {
 export class AppComponent implements OnInit {
     options: any;
     widgets: Array<any> = mockDashboardLayout;
-    showDebug = true; // Set to false in production
+    showDebug = false; // Set to false in production
     lastChanged: any = null;
     customColorScheme: Color = {
         domain: [
@@ -75,14 +77,14 @@ export class AppComponent implements OnInit {
 
     initializeGridsterOptions() {
         this.options = {
-            gridType: GridType.ScrollVertical, // Fits the items to the screen
+            gridType: GridType.VerticalFixed, // Fits the items to the screen
             displayGrid: 'onDrag&Resize', // Shows the grid lines
             pushItems: true, // Push items out of the way when dragging
             draggable: {
                 enabled: true, // Enable dragging
                 ignoreContent: true, // Allows clicking inside widgets without starting drag
                 dropOverItems: true, // Allows dropping over other items
-                dragHandleClass: 'widget-header', // Only drag from header
+                dragHandleClass: 'drag-handle', // Only drag from header
                 delayStart: 0, // No delay on drag start
             },
             resizable: {
@@ -90,11 +92,12 @@ export class AppComponent implements OnInit {
             },
             minCols: 12, // Minimum number of columns
             maxCols: 12, // Maximum number of columns
-            minRows: 16, // Minimum number of rows
-            margin: 10, // Margin between items
+            minRows: 500, // Minimum number of rows
+            margin: 16, // Margin between items
             outerMargin: true, // Margin around the grid
             compactType: CompactType.None, // Don't auto-compact items
-            fixedRowHeight: 64,
+            maxRows: 500,
+            fixedRowHeight: 112, // Fixed row height
 
             // Called when any item is changed (dragged, resized, etc)
             itemChangeCallback: (item: GridsterItem) => {
@@ -158,7 +161,7 @@ export class AppComponent implements OnInit {
     getViewDimensions(widget: any): [number, number] {
         const headerHeight = 44; // Height of the widget-header in pixels
         const width = widget.cols * 140; // Adjust the multiplier as needed
-        const height = widget.rows * 140; // Subtract the header height
+        const height = widget.rows * 90; // Subtract the header height
         return [width, height];
     }
 

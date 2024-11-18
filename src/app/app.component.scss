@@ -6,9 +6,9 @@ mat-toolbar {
         align-items: center;
         gap: 16px;
     }
-    .flex {
-        flex: 1 1 auto;
-    }
+}
+.flex {
+    flex: 1 1 auto;
 }
 .dashboard-container {
     height: calc(100vh - 100px);
@@ -24,14 +24,15 @@ gridster gridster-item {
 }
 
 gridster gridster-item .widget-header {
-    padding: 16px;
+    padding: 16px 16px 0px 16px;
     border-radius: 12px 12px 0 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     font-size: 20px;
     font-weight: 500;
     letter-spacing: 0px;
+    gap: 16px;
 }
 
 gridster gridster-item .coordinates {

@@ -6,7 +6,7 @@ export const mockDashboardLayout = [
         cols: 3,
         rows: 2,
         x: 6,
-        y: 1,
+        y: 2,
         content: {
             chartType: 'bar',
             dataSource: 'pipeline_stages',
@@ -27,7 +27,7 @@ export const mockDashboardLayout = [
         cols: 3,
         rows: 2,
         x: 0,
-        y: 1,
+        y: 2,
         content: {
             chartType: 'bar',
             dataSource: 'product_categories',
@@ -48,7 +48,7 @@ export const mockDashboardLayout = [
         cols: 3,
         rows: 2,
         x: 3,
-        y: 1,
+        y: 2,
         content: {
             chartType: 'line',
             dataSource: 'team_performance',
@@ -80,7 +80,7 @@ export const mockDashboardLayout = [
         type: 'metric',
         title: 'Deal Metrics',
         cols: 3,
-        rows: 1,
+        rows: 2,
         x: 0,
         y: 0,
         content: {
@@ -96,7 +96,7 @@ export const mockDashboardLayout = [
         cols: 4,
         rows: 2,
         x: 8,
-        y: 3,
+        y: 4,
         content: {
             chartType: 'line',
             dataSource: 'deal_size_trend',
@@ -122,7 +122,7 @@ export const mockDashboardLayout = [
         cols: 4,
         rows: 2,
         x: 0,
-        y: 3,
+        y: 4,
         content: {
             chartType: 'pie',
             dataSource: 'revenue_distribution',
@@ -141,7 +141,7 @@ export const mockDashboardLayout = [
         cols: 4,
         rows: 2,
         x: 4,
-        y: 3,
+        y: 4,
         content: {
             chartType: 'line',
             dataSource: 'revenue_metrics',
@@ -165,23 +165,19 @@ export const mockDashboardLayout = [
         type: 'metric',
         title: 'Profit Goals',
         cols: 3,
-        rows: 1,
+        rows: 2,
         x: 3,
         y: 0,
-        content: {
-            chartType: 'metric',
-            metrics: ['goal', 'achieved', 'remaining'],
-            data: { goal: 100000, achieved: 75000, remaining: 25000 },
-        },
+        content: { chartType: 'metric', metrics: ['goal', 'achieved', 'remaining'], data: { goal: 100000, achieved: 75000, remaining: 25000 } },
     },
     {
         id: 'widget3',
         type: 'chart',
         title: 'Top Accounts by Revenue',
-        cols: 4,
+        cols: 6,
         rows: 3,
         x: 6,
-        y: 5,
+        y: 6,
         content: {
             chartType: 'bar',
             dataSource: 'top_accounts',
@@ -200,14 +196,10 @@ export const mockDashboardLayout = [
         type: 'metric',
         title: 'Sales Conversion Rate',
         cols: 3,
-        rows: 1,
+        rows: 2,
         x: 6,
         y: 0,
-        content: {
-            chartType: 'metric',
-            metrics: ['leads', 'conversions', 'conversionRate'],
-            data: { leads: 200, conversions: 50, conversionRate: 25 },
-        },
+        content: { chartType: 'metric', metrics: ['leads', 'conversions', 'conversionRate'], data: { leads: 200, conversions: 50, conversionRate: 25 } },
     },
     {
         id: 'widget5',
@@ -216,7 +208,7 @@ export const mockDashboardLayout = [
         cols: 3,
         rows: 2,
         x: 9,
-        y: 1,
+        y: 2,
         content: {
             chartType: 'pie',
             dataSource: 'quarterly_profit',
@@ -234,14 +226,10 @@ export const mockDashboardLayout = [
         type: 'metric',
         title: 'Customer Satisfaction',
         cols: 3,
-        rows: 1,
+        rows: 2,
         x: 9,
         y: 0,
-        content: {
-            chartType: 'metric',
-            metrics: ['satisfied', 'neutral', 'dissatisfied'],
-            data: { satisfied: 80, neutral: 15, dissatisfied: 5 },
-        },
+        content: { chartType: 'metric', metrics: ['satisfied', 'neutral', 'dissatisfied'], data: { satisfied: 80, neutral: 15, dissatisfied: 5 } },
     },
     {
         id: 'widget7',
@@ -250,7 +238,7 @@ export const mockDashboardLayout = [
         cols: 6,
         rows: 3,
         x: 0,
-        y: 5,
+        y: 6,
         content: {
             chartType: 'gauge',
             dataSource: 'regional_sales',
@@ -263,4 +251,47 @@ export const mockDashboardLayout = [
             ],
         },
     },
+    {
+        id: 'widget14',
+        type: 'chart',
+        title: 'Revenue by Product',
+        cols: 4,
+        rows: 3,
+        x: 0,
+        y: 6,
+        content: {
+            chartType: 'advanced-pie',
+            dataSource: 'product_revenue',
+            refreshInterval: 1200000,
+            data: [
+                { name: 'Product A', value: 50000 },
+                { name: 'Product B', value: 30000 },
+                { name: 'Product C', value: 20000 },
+                { name: 'Product D', value: 15000 },
+                { name: 'Product E', value: 10000 },
+            ],
+        },
+    }
 ];
+
+export const advancedPie = {
+    id: 'widget14',
+    type: 'chart',
+    title: 'Revenue by Product',
+    cols: 4,
+    rows: 3,
+    x: 0,
+    y: 6,
+    content: {
+        chartType: 'advanced-pie',
+        dataSource: 'product_revenue',
+        refreshInterval: 1200000,
+        data: [
+            { name: 'Product A', value: 50000 },
+            { name: 'Product B', value: 30000 },
+            { name: 'Product C', value: 20000 },
+            { name: 'Product D', value: 15000 },
+            { name: 'Product E', value: 10000 },
+        ],
+    },
+};

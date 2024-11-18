@@ -14,14 +14,16 @@
         <gridster-item [item]="widget" *ngFor="let widget of widgets" (dragend)="onDragEnd($event, widget)">
             <mat-card appearance="outlined" class="widget-container">
                 <div class="widget-header">
+                    <!-- Widget title -->
+                    <mat-icon class="drag-handle">drag_handle</mat-icon>
                     <span class="widget-title">{{ widget.title }}</span>
+                    <div class="flex"></div>
                     <!-- Optional: Show coordinates -->
                     <span class="coordinates" *ngIf="showDebug">({{ widget.x }}, {{ widget.y }})</span>
                 </div>
                 <div class="widget-content">
                     <!-- Widget content here -->
                     <ng-container [ngSwitch]="widget.content.chartType">
-                        <!-- {{widget | json}} -->
                         <ngx-charts-line-chart
                             *ngSwitchCase="'line'"
                             [results]="widget.content.data"
@@ -54,6 +56,14 @@
                             [scheme]="customColorScheme"
                         >
                         </ngx-charts-pie-chart>
+
+                        <ngx-charts-advanced-pie-chart
+                            *ngSwitchCase="'advanced-pie'"
+                            [results]="widget.content.data"
+                            [view]="getViewDimensions(widget)"
+                            [scheme]="customColorScheme"
+                        >
+                        </ngx-charts-advanced-pie-chart>
 
                         <ngx-charts-gauge
                             *ngSwitchCase="'gauge'"
