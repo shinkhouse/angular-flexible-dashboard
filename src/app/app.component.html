@@ -1,94 +1,111 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <span>Dashboard</span>
-        <div class="flex"></div>
-        <button mat-button color="primary" (click)="showDebug = !showDebug">{{ showDebug ? "Hide" : "Show" }} Debug Info</button>
-        <button mat-flat-button color="primary">Add Widget</button>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span>{{currentLayout.name}}</span>
+    <button mat-icon-button [mat-menu-trigger-for]="menu">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openCreateDashboardDialog()">Create New Dashboard</button>
+      <hr>
+      <button mat-menu-item *ngFor="let layout of layouts" (click)="switchLayout(layout.name)">{{layout.name}}</button>
+    </mat-menu>
+    <div class="flex"></div>
+    <button mat-button color="primary" (click)="showDebug = !showDebug">{{ showDebug ? "Hide" : "Show" }} Debug Info</button>
+    <button mat-flat-button color="primary">Add Widget</button>
+  </mat-toolbar-row>
 </mat-toolbar>
 <div class="dashboard-container">
-    <!-- Optional: Display current coordinates for debugging -->
-    <div class="debug-info" *ngIf="showDebug">Last Changed Widget: {{ lastChanged | json }}</div>
+  <!-- Optional: Display current coordinates for debugging -->
+  <div class="debug-info" *ngIf="showDebug">
+    Last Changed Widget: {{ lastChanged | json }}
+  </div>
+  <gridster [options]="options">
+    <gridster-item
+      [item]="widget"
+      *ngFor="let widget of currentLayout.layout"
+      (dragend)="onDragEnd($event, widget)"
+    >
+      <mat-card appearance="outlined" class="widget-container">
+        <div class="widget-header">
+          <mat-icon class="drag-handle">drag_handle</mat-icon>
+          <span class="widget-title">{{ widget.title }}</span>
+          <div class="flex"></div>
+          <!-- Optional: Show coordinates -->
+          <span class="coordinates" *ngIf="showDebug">({{ widget.x }}, {{ widget.y }})</span>
+        </div>
+        <div class="widget-content">
+          <!-- Widget content here -->
+          <ng-container [ngSwitch]="widget.content.chartType">
+            <!-- {{widget | json}} -->
+            <ngx-charts-line-chart 
+              *ngSwitchCase="'line'"
+              [results]="widget.content.data"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [yScaleMin]="getYScaleMin(widget.content.data)"
+              [view]="getViewDimensions(widget)"
+              [scheme]="customColorScheme">
+            </ngx-charts-line-chart>
+            
+            <ngx-charts-bar-vertical
+              *ngSwitchCase="'bar'"
+              [results]="widget.content.data"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [yScaleMin]="getYScaleMin(widget.content.data)"
+              [view]="getViewDimensions(widget)"
+              [scheme]="customColorScheme">
+            </ngx-charts-bar-vertical>
+            
+            <ngx-charts-pie-chart
+              *ngSwitchCase="'pie'"
+              [results]="widget.content.data"
+              [legend]="true"
+              [view]="getViewDimensions(widget)"
+              [scheme]="customColorScheme">
+            </ngx-charts-pie-chart>
+            
+            <ngx-charts-advanced-pie-chart
+              *ngSwitchCase="'advanced-pie'"
+              [results]="widget.content.data"
+              [view]="getViewDimensions(widget)"
+              [scheme]="customColorScheme">
+            </ngx-charts-advanced-pie-chart>
+            
+            <ngx-charts-gauge
+              *ngSwitchCase="'gauge'"
+              [results]="widget.content.data"
+              [min]="0"
+              [max]="100"
+              [angleSpan]="240"
+              [startAngle]="-120"
+              [units]="'%'"
+              [bigSegments]="10"
+              [smallSegments]="5"
+              [legend]="true"
+              [view]="getViewDimensions(widget)"
+              [scheme]="customColorScheme">
+            </ngx-charts-gauge>
 
-    <gridster [options]="options">
-        <gridster-item [item]="widget" *ngFor="let widget of widgets" (dragend)="onDragEnd($event, widget)">
-            <mat-card appearance="outlined" class="widget-container">
-                <div class="widget-header">
-                    <!-- Widget title -->
-                    <mat-icon class="drag-handle">drag_handle</mat-icon>
-                    <span class="widget-title">{{ widget.title }}</span>
-                    <div class="flex"></div>
-                    <!-- Optional: Show coordinates -->
-                    <span class="coordinates" *ngIf="showDebug">({{ widget.x }}, {{ widget.y }})</span>
-                </div>
-                <div class="widget-content">
-                    <!-- Widget content here -->
-                    <ng-container [ngSwitch]="widget.content.chartType">
-                        <ngx-charts-line-chart
-                            *ngSwitchCase="'line'"
-                            [results]="widget.content.data"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [legend]="true"
-                            [yScaleMin]="getYScaleMin(widget.content.data)"
-                            [view]="getViewDimensions(widget)"
-                            [scheme]="customColorScheme"
-                        >
-                        </ngx-charts-line-chart>
+            <app-metrics
+              *ngSwitchCase="'metric'"
+              [metrics]="getMetrics(widget.content.metrics, widget.content.data)">
+            </app-metrics>
 
-                        <ngx-charts-bar-vertical
-                            *ngSwitchCase="'bar'"
-                            [results]="widget.content.data"
-                            [xAxis]="true"
-                            [yAxis]="true"
-                            [legend]="true"
-                            [yScaleMin]="getYScaleMin(widget.content.data)"
-                            [view]="getViewDimensions(widget)"
-                            [scheme]="customColorScheme"
-                        >
-                        </ngx-charts-bar-vertical>
-
-                        <ngx-charts-pie-chart
-                            *ngSwitchCase="'pie'"
-                            [results]="widget.content.data"
-                            [legend]="true"
-                            [view]="getViewDimensions(widget)"
-                            [scheme]="customColorScheme"
-                        >
-                        </ngx-charts-pie-chart>
-
-                        <ngx-charts-advanced-pie-chart
-                            *ngSwitchCase="'advanced-pie'"
-                            [results]="widget.content.data"
-                            [view]="getViewDimensions(widget)"
-                            [scheme]="customColorScheme"
-                        >
-                        </ngx-charts-advanced-pie-chart>
-
-                        <ngx-charts-gauge
-                            *ngSwitchCase="'gauge'"
-                            [results]="widget.content.data"
-                            [min]="0"
-                            [max]="100"
-                            [angleSpan]="240"
-                            [startAngle]="-120"
-                            [units]="'%'"
-                            [bigSegments]="10"
-                            [smallSegments]="5"
-                            [legend]="true"
-                            [view]="getViewDimensions(widget)"
-                            [scheme]="customColorScheme"
-                        >
-                        </ngx-charts-gauge>
-
-                        <app-metrics *ngSwitchCase="'metric'" [metrics]="getMetrics(widget.content.metrics, widget.content.data)"> </app-metrics>
-
-                        <div *ngSwitchDefault>
-                            {{ widget | json }}
-                        </div>
-                    </ng-container>
-                </div>
-            </mat-card>
-        </gridster-item>
-    </gridster>
+            <div *ngSwitchDefault>
+              {{widget | json}}
+            </div>
+          </ng-container>
+        </div>
+      </mat-card>
+    </gridster-item>
+    <div class="empty-state" *ngIf="!currentLayout?.layout?.length">
+      <mat-icon>dashboard</mat-icon>
+      <h5>Empty Dashboard</h5>
+      <p>This dashboard does not have any widgets</p>
+      <button mat-raised-button color="primary">Add Widget</button>
+    </div>
+  </gridster>
 </div>
