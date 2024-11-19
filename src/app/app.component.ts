@@ -43,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  rowHeight = 72;
   options: any;
   layouts: DashboardLayout[] = mockDashboardLayout;
   currentLayout: DashboardLayout = this.layouts[0];
@@ -97,7 +98,7 @@ export class AppComponent implements OnInit {
             outerMargin: true, // Margin around the grid
             compactType: CompactType.None, // Don't auto-compact items
             maxRows: 500,
-            fixedRowHeight: 112, // Fixed row height
+            fixedRowHeight: this.rowHeight, // Fixed row height
       
       // Called when any item is changed (dragged, resized, etc)
       itemChangeCallback: (item: GridsterItem) => {
@@ -184,10 +185,15 @@ export class AppComponent implements OnInit {
   }
 
   getViewDimensions(widget: any): [number, number] {
-    const headerHeight = 44; // Height of the widget-header in pixels
-    const width = widget.cols * 140; // Adjust the multiplier as needed
-    const height = widget.rows * 90;
+    const width = widget.cols * 140;
+    const height = this.getWidgetHeight(widget);
     return [width, height];
+  }
+  getWidgetHeight(widget: GridsterItem): number {
+    const headerHeight = 40;
+    const rowHeight = this.rowHeight; // matches fixedRowHeight from options
+    const totalHeight = widget.rows * rowHeight;
+    return totalHeight - headerHeight; // Returns space available for content
   }
 
   getMetrics(metricNames: string[], data: any): { name: string; value: number }[] {

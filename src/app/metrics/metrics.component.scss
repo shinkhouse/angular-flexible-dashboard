@@ -2,12 +2,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 8px;
+    column-gap: 16px;
+    row-gap: 16px;
 }
 
 .metric {
     flex: 1 1 30%;
-    margin: 8px;
     padding: 8px 16px;
     background: #f0f0f0;
     border-radius: 4px;

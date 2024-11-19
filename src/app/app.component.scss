@@ -25,6 +25,9 @@ gridster {
 gridster gridster-item {
     background: white;
     border-radius: 12px;
+    mat-card {
+        height: 100%;
+    }
 }
 
 gridster gridster-item .widget-header {
