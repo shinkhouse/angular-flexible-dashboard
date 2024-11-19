@@ -1,0 +1,13 @@
+<mat-dialog-content>
+    <form [formGroup]="dashboardForm">
+        <mat-form-field>
+            <mat-label>Dashboard Name</mat-label>
+            <input matInput formControlName="dashboardName" />
+            <mat-error *ngIf="dashboardForm.get('dashboardName')?.hasError('required')"> Dashboard Name is required </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="dashboardForm.invalid">Create</button>
+</mat-dialog-actions>
