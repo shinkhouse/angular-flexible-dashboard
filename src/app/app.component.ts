@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { CreateNewDashboardComponent } from './create-new-dashboard/create-new-dashboard.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -48,16 +50,16 @@ export class AppComponent implements OnInit {
   lastChanged: any = null;
   customColorScheme: Color = {
     domain: [
-      '#2196F3', // Blue 500
-      '#64B5F6', // Blue 300
-      '#1976D2', // Blue 700
-      '#BBDEFB', // Blue 100
-      '#0D47A1', // Blue 900
-      '#42A5F5', // Blue 400
-      '#90CAF9', // Blue 200
-      '#1E88E5', // Blue 600
-      '#1565C0', // Blue 800
-      '#E3F2FD'  // Blue 50
+      '#4CAF50', // Green 500
+      '#81C784', // Green 300
+      '#388E3C', // Green 700
+      '#C8E6C9', // Green 100
+      '#1B5E20', // Green 900
+      '#66BB6A', // Green 400
+      '#A5D6A7', // Green 200
+      '#43A047', // Green 600
+      '#2E7D32', // Green 800
+      '#E8F5E9'  // Green 50
     ],
     name: '',
     selectable: false,

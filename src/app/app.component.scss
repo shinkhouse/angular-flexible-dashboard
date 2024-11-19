@@ -5,6 +5,10 @@ mat-toolbar {
         justify-content: space-between;
         align-items: center;
         gap: 16px;
+        img {
+            width: 40px;
+            height: 40px;
+        }
     }
 }
 .flex {
@@ -43,11 +47,6 @@ gridster gridster-item .coordinates {
 
 gridster gridster-item .widget-content {
     padding: 10px;
-}
-
-gridster .gridster-column,
-gridster .gridster-row {
-    border-color: red !important;
 }
 
 gridster .gridster-preview-holder {
